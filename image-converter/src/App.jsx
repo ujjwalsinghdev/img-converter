@@ -22,9 +22,15 @@ function App() {
   const handleFileChange = useCallback(async (acceptedFiles) => {
     setError(null);
     const newFiles = acceptedFiles.filter(file => {
-      // console.log(`Processing file: ${file.name}, Type: ${file.type}`); // Removed diagnostic log
-      if (!['image/heic', 'image/heif', 'image/x-heic', 'image/x-heif'].includes(file.type)) {
-        setError(`Unsupported file type: ${file.name}. Only HEIC/HEIF files are allowed.`);
+      console.log(`Processing file: ${file.name}, Type: ${file.type}`); // Re-added diagnostic log
+      const fileNameLower = file.name.toLowerCase();
+      const isHeicExtension = fileNameLower.endsWith('.heic') || fileNameLower.endsWith('.heif');
+
+      const isAllowedHeicMime = ['image/heic', 'image/heif', 'image/x-heic', 'image/x-heif'].includes(file.type);
+      const isAllowedConvertedMime = ['image/jpeg', 'image/png'].includes(file.type) && isHeicExtension;
+
+      if (!isAllowedHeicMime && !isAllowedConvertedMime) {
+        setError(`Unsupported file type: ${file.name}. Only HEIC/HEIF files are allowed, or converted JPG/PNG from HEIC/HEIF.`);
         return false;
       }
       if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
