@@ -245,6 +245,7 @@ function App() {
           </div>
         </div>
       )}
+      <p className="privacy-statement">All image conversion is performed locally in your browser on your device, and your photos are never uploaded to any server, stored, accessed, or seen by us. Your privacy is fully respected ❤️</p>
     </div>
   );
 }
