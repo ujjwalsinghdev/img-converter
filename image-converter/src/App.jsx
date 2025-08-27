@@ -22,6 +22,7 @@ function App() {
   const handleFileChange = useCallback(async (acceptedFiles) => {
     setError(null);
     const newFiles = acceptedFiles.filter(file => {
+      console.log(`Processing file: ${file.name}, Type: ${file.type}`); // Added log
       if (file.type !== 'image/heic' && file.type !== 'image/heif') {
         setError(`Unsupported file type: ${file.name}. Only HEIC/HEIF files are allowed.`);
         return false;
